@@ -145,5 +145,5 @@ loadJson('https://interactive.guim.co.uk/docsdata-test/1MHrA0nz6HVp7aJw5_KZkE90_
 	//fillFurniture(fileRaw.sheets.furniture);
 	
 	parseData(fileRaw.sheets);
-	//window.resize();
+	window.resize();
 })
