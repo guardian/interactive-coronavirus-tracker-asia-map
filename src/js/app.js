@@ -42,7 +42,7 @@ topojson.feature(asiaMap, asiaMap.objects.asia_china_extent).features
 
 const asiaChinaExtent = topojson.feature(asiaMap, {
 	type: "GeometryCollection",
-	geometries: asiaMap.objects.asia_china_extent.geometries.filter(d => d.properties.NAME_0 == 'China' || d.properties.code == 'JPN' || d.properties.code == 'MYS')
+	geometries: asiaMap.objects.asia_china_extent.geometries.filter(d => d.properties.NAME_0 == 'China' || d.properties.ISO_A3 == 'JPN' || d.properties.ISO_A3 == 'MYS')
 });
 
 const map = d3.select('.interactive-wrapper')
@@ -60,11 +60,11 @@ projection.fitExtent([[0, 10], [width, height - 20]], asiaChinaExtent);
 
 
 geo.selectAll('path')
-.data(topojson.feature(asiaMap, asiaMap.objects.asia_china_extent).features.filter(d => d.properties.code != 'extent'))
+.data(topojson.feature(asiaMap, asiaMap.objects.asia_china_extent).features.filter(d => d.properties.ISO_A3 != 'extent'))
 .enter()
 .append('path')
 .attr('d', path)
-.attr('class', d => 'country ' + d.properties.code.split(' ').join(''))
+.attr('class', d => 'country ' + d.properties.ISO_A3.split(' ').join(''))
 
 
 const parseData = (sheet) => {
@@ -96,10 +96,10 @@ const parseData = (sheet) => {
 
 	data.map(d => {
 
-		let area = d3.select('.' + d.code.split(' ').join(''))
+		let area = d3.select('.' + d.ISO_A3.split(' ').join(''))
 		.classed(' selected', true);
 
-		let feature = topojson.feature(asiaMap, asiaMap.objects.asia_china_extent).features.find(c => c.properties.code.split(' ').join('') === d.code.split(' ').join(''))
+		let feature = topojson.feature(asiaMap, asiaMap.objects.asia_china_extent).features.find(c => c.properties.ISO_A3.split(' ').join('') === d.ISO_A3.split(' ').join(''))
 
 		let centroid = path.centroid(feature);
 		if(d.lat) centroid = projection([d.lon, d.lat]);
